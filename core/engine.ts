@@ -20,24 +20,24 @@
              * starts the engine
              */
             public start(): void {
-                this._canvas = GLUtilities.initialize();
-                AssetManager.initialize();
-                gl.clearColor(0, 0, 0, 1);
-                this._basicShader = new BasicShader();
-                this._basicShader.use();
+                this._canvas = GLUtilities.initialize(); //initialize the canvas
+                AssetManager.initialize(); //initialize asset manager
+                gl.clearColor(0, 0, 0, 1); //set clear color to black
+                this._basicShader = new BasicShader(); //create an instance of basicshader
+                this._basicShader.use(); //set basicshader as the active shader
 
 
                 //load materials
-                MaterialManager.registermaterial(new Material("wood", "assets/textures/wood.jpg", new Color(0, 128, 255, 255)));
-                let ZoneID = ZoneManager.createTestZone();
+                MaterialManager.registermaterial(new Material("wood", "assets/textures/wood.jpg", new Color(0, 128, 255, 255))); //register material
+                let ZoneID = ZoneManager.createTestZone(); //create a testzone
 
                 // load
-                this._projection = Matrix4x4.orthographic(0, this._canvas.width, this._canvas.height, 0, -100.0, 100.0);
+                this._projection = Matrix4x4.orthographic(0, this._canvas.width, this._canvas.height, 0, -100.0, 100.0); //initialize ortographic projection based on the canvas size
 
-                ZoneManager.changeZone(ZoneID);
+                ZoneManager.changeZone(ZoneID); //set the initial zone
 
-                this.resize();
-                this.loop();
+                this.resize(); //call resize to handle initial canvas resizing
+                this.loop(); //initiates the game loop
             
             }
             /** resizes the canvas to fit to window*/
@@ -65,19 +65,7 @@
                 let projectionPosition = this._basicShader.getUniformLocation("u_projection");
                 gl.uniformMatrix4fv(projectionPosition, false, new Float32Array(this._projection.data));
 
-               
-
-                
                 requestAnimationFrame(this.loop.bind(this));
-
-
             }
-
-
-
-
-
         }
-
-
     }
