@@ -10,14 +10,14 @@ namespace TSE {
     export class Zone {
         private _id: number;
         private _name: string;
-        private _desription: string;
+        private _description: string;
         private _scene: Scene;
         private _state: ZoneState = ZoneState.UNINITIALIZED;
 
         public constructor(id: number, name: string, description: string) {
             this._id = id;
             this._name = name;
-            this._desription = description;
+            this._description = description;
             this._scene = new Scene();
 
          
@@ -32,7 +32,7 @@ namespace TSE {
         }
         //get the description of a zone
         public get description(): string {
-            return this._desription;
+            return this._description;
         }
         //get the scene of the zone
         public get scene(): Scene {

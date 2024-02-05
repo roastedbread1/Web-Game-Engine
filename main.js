@@ -140,16 +140,12 @@ var TSE;
             TSE.gl.clearColor(0, 0, 0, 1);
             this._basicShader = new TSE.BasicShader();
             this._basicShader.use();
-            var ZoneID = TSE.ZoneManager.createZone("testZone", "zone for testing");
-            TSE.ZoneManager.changeZone(ZoneID);
             //load materials
             TSE.MaterialManager.registermaterial(new TSE.Material("wood", "assets/textures/wood.jpg", new TSE.Color(0, 128, 255, 255)));
+            var ZoneID = TSE.ZoneManager.createTestZone();
             // load
             this._projection = TSE.Matrix4x4.orthographic(0, this._canvas.width, this._canvas.height, 0, -100.0, 100.0);
-            this._sprite = new TSE.Sprite("test", "wood");
-            this._sprite.load();
-            this._sprite.position.x = 300;
-            this._sprite.position.y = 200;
+            TSE.ZoneManager.changeZone(ZoneID);
             this.resize();
             this.loop();
         };
@@ -171,7 +167,6 @@ var TSE;
             //set uniforms.
             var projectionPosition = this._basicShader.getUniformLocation("u_projection");
             TSE.gl.uniformMatrix4fv(projectionPosition, false, new Float32Array(this._projection.data));
-            this._sprite.draw(this._basicShader);
             requestAnimationFrame(this.loop.bind(this));
         };
         return Engine;
@@ -1456,7 +1451,7 @@ var TSE;
             this._state = ZoneState.UNINITIALIZED;
             this._id = id;
             this._name = name;
-            this._desription = description;
+            this._description = description;
             this._scene = new TSE.Scene();
         }
         Object.defineProperty(Zone.prototype, "id", {
@@ -1478,7 +1473,7 @@ var TSE;
         Object.defineProperty(Zone.prototype, "description", {
             //get the description of a zone
             get: function () {
-                return this._desription;
+                return this._description;
             },
             enumerable: false,
             configurable: true
@@ -1519,6 +1514,29 @@ var TSE;
     }());
     TSE.Zone = Zone;
 })(TSE || (TSE = {}));
+///<reference path="./zone.ts" />
+var TSE;
+(function (TSE) {
+    var TestZone = /** @class */ (function (_super) {
+        __extends(TestZone, _super);
+        function TestZone() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TestZone.prototype.load = function () {
+            this._sprite = new TSE.Sprite("test", "wood");
+            this._sprite.load();
+            this._sprite.position.x = 300;
+            this._sprite.position.y = 200;
+            _super.prototype.load.call(this);
+        };
+        TestZone.prototype.draw = function (shader) {
+            this._sprite.draw(shader);
+            _super.prototype.render.call(this, shader);
+        };
+        return TestZone;
+    }(TSE.Zone));
+    TSE.TestZone = TestZone;
+})(TSE || (TSE = {}));
 var TSE;
 (function (TSE) {
     var ZoneManager = /** @class */ (function () {
@@ -1527,6 +1545,13 @@ var TSE;
         ZoneManager.createZone = function (name, description) {
             ZoneManager._globalZoneID++;
             var zone = new TSE.Zone(ZoneManager._globalZoneID, name, description);
+            ZoneManager._zones[ZoneManager._globalZoneID] = zone; //assign the newly created zone to the zones hashmap for easier lookup genius if I may say
+            return ZoneManager._globalZoneID;
+        };
+        //temp method, will be deleted once loading zones from files is added
+        ZoneManager.createTestZone = function () {
+            ZoneManager._globalZoneID++;
+            var zone = new TSE.TestZone(ZoneManager._globalZoneID, "test", "test zone");
             ZoneManager._zones[ZoneManager._globalZoneID] = zone; //assign the newly created zone to the zones hashmap for easier lookup genius if I may say
             return ZoneManager._globalZoneID;
         };

@@ -16,6 +16,15 @@ namespace TSE {
 
             return ZoneManager._globalZoneID;
         }
+        //temp method, will be deleted once loading zones from files is added
+        public static createTestZone(): number {
+            ZoneManager._globalZoneID++;
+            let zone = new TestZone(ZoneManager._globalZoneID, "test", "test zone");
+
+            ZoneManager._zones[ZoneManager._globalZoneID] = zone; //assign the newly created zone to the zones hashmap for easier lookup genius if I may say
+
+            return ZoneManager._globalZoneID;
+        }
 
         public static changeZone(id: number): void {
             

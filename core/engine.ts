@@ -26,14 +26,15 @@
                 this._basicShader = new BasicShader();
                 this._basicShader.use();
 
-                let ZoneID = ZoneManager.createZone("testZone", "zone for testing");
-                ZoneManager.changeZone(ZoneID);
 
                 //load materials
                 MaterialManager.registermaterial(new Material("wood", "assets/textures/wood.jpg", new Color(0, 128, 255, 255)));
+                let ZoneID = ZoneManager.createTestZone();
+
                 // load
                 this._projection = Matrix4x4.orthographic(0, this._canvas.width, this._canvas.height, 0, -100.0, 100.0);
 
+                ZoneManager.changeZone(ZoneID);
 
                 this.resize();
                 this.loop();
