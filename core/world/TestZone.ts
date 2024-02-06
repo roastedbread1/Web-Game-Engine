@@ -13,7 +13,7 @@ namespace TSE {
             super.load();
         } 
 
-        public draw(shader: Shader): void {
+        public render(shader: Shader): void {
             this._sprite.draw(shader);
             super.render(shader);
         }

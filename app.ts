@@ -7,5 +7,5 @@ window.onload = function () {
 }
 
 window.onresize = function () {
-    engine.resize(); //calling resize function whenever the window get resized
+    engine.resize();
 }

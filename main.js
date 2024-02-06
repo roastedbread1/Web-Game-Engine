@@ -16,8 +16,8 @@ var __extends = (this && this.__extends) || (function () {
 var engine;
 // the main entry point to the application
 window.onload = function () {
-    engine = new TSE.Engine();
-    engine.start();
+    engine = new TSE.Engine(); //initialize the engine variable and assigning it
+    engine.start(); //start the engine
 };
 window.onresize = function () {
     engine.resize();
@@ -135,19 +135,19 @@ var TSE;
          * starts the engine
          */
         Engine.prototype.start = function () {
-            this._canvas = TSE.GLUtilities.initialize();
-            TSE.AssetManager.initialize();
-            TSE.gl.clearColor(0, 0, 0, 1);
-            this._basicShader = new TSE.BasicShader();
-            this._basicShader.use();
+            this._canvas = TSE.GLUtilities.initialize(); //initialize the canvas
+            TSE.AssetManager.initialize(); //initialize asset manager
+            TSE.gl.clearColor(0, 0, 0, 1); //set clear color to black
+            this._basicShader = new TSE.BasicShader(); //create an instance of basicshader
+            this._basicShader.use(); //set basicshader as the active shader
             //load materials
-            TSE.MaterialManager.registermaterial(new TSE.Material("wood", "assets/textures/wood.jpg", new TSE.Color(0, 128, 255, 255)));
-            var ZoneID = TSE.ZoneManager.createTestZone();
+            TSE.MaterialManager.registermaterial(new TSE.Material("wood", "assets/textures/wood.jpg", new TSE.Color(0, 0, 255, 255))); //register material
+            var ZoneID = TSE.ZoneManager.createTestZone(); //create a testzone
             // load
-            this._projection = TSE.Matrix4x4.orthographic(0, this._canvas.width, this._canvas.height, 0, -100.0, 100.0);
-            TSE.ZoneManager.changeZone(ZoneID);
-            this.resize();
-            this.loop();
+            this._projection = TSE.Matrix4x4.orthographic(0, this._canvas.width, this._canvas.height, 0, -100.0, 100.0); //initialize ortographic projection based on the canvas size
+            TSE.ZoneManager.changeZone(ZoneID); //set the initial zone
+            this.resize(); //call resize to handle initial canvas resizing
+            this.loop(); //initiates the game loop
         };
         /** resizes the canvas to fit to window*/
         Engine.prototype.resize = function () {
@@ -1515,6 +1515,7 @@ var TSE;
     TSE.Zone = Zone;
 })(TSE || (TSE = {}));
 ///<reference path="./zone.ts" />
+// or you can just import but that doesnt look sexy,  import { Zone } from "./Zone";
 var TSE;
 (function (TSE) {
     var TestZone = /** @class */ (function (_super) {
@@ -1529,7 +1530,7 @@ var TSE;
             this._sprite.position.y = 200;
             _super.prototype.load.call(this);
         };
-        TestZone.prototype.draw = function (shader) {
+        TestZone.prototype.render = function (shader) {
             this._sprite.draw(shader);
             _super.prototype.render.call(this, shader);
         };

@@ -28,7 +28,7 @@
 
 
                 //load materials
-                MaterialManager.registermaterial(new Material("wood", "assets/textures/wood.jpg", new Color(0, 128, 255, 255))); //register material
+                MaterialManager.registermaterial(new Material("wood", "assets/textures/wood.jpg", new Color(0, 0, 255, 255))); //register material
                 let ZoneID = ZoneManager.createTestZone(); //create a testzone
 
                 // load
